@@ -1,4 +1,4 @@
-from flask import Flask,request,redirect,url_for,render_template,flash,session,send_file,make_response
+from flask import Flask,request,redirect,url_for,render_template,flash,session,send_file,jsonify
 from flask_session import Session
 from otp import genotp
 from cmail import send_mail
@@ -340,12 +340,59 @@ def search():
         print(e)
         flash('could not fetch searchdata')
         return redirect(url_for('dashboard'))
-@app.route('/logout')
+@app.route('/logout',methods=['GET'])
 def logout():
-    if not request.cookies.get('UserId'):
+    if not session.get('userid'):
+        flash('pls login first')
         return redirect(url_for('login'))
-    resp=make_response(redirect(url_for('login')))
-    resp.delete_cookie('UserId')
-    return resp   
+    session.pop('userid')
+    return redirect(url_for('login'))
+
+@app.route('/forgotpwd',methods=['GET','POST'])
+def forgotpwd():
+    if request.method=='POST':
+        user_email=request.form['email']
+        try:
+            cursor=mydb.cursor(buffered=True)
+            cursor.execute('select count(*) from userdata where useremail=%s',[user_email])
+            email_count=cursor.fetchone()[0]
+            if email_count==1:
+                subject='Password Re-set link for SNM Appy'
+                body=f"Use the given Re-set link : {url_for('newpassword',data=endata(user_email),_external=True)}"
+                send_mail(to=user_email,subject=subject,body=body)
+                flash('Re-set link has been sent to given mail')
+                return redirect(url_for('forgotpwd'))
+            elif email_count==0:
+                flash('email not found')
+                return redirect(url_for('forgotpwd'))
+            else:
+                flash('could not verify useremail')
+                return redirect(url_for('forgotpwd'))
+        except Exception as e:
+            print(e)
+            flash('Could not connect to DB')
+            return redirect(url_for('forgotpwd'))
+    return render_template('forgotpwd.html')
+@app.route('/newpassword/<data>',methods=['GET','PUT'])
+def newpassword(data):
+    try:
+        user_email=dndata(data)
+        if request.method=='PUT':
+            npassword=request.get_json()['newpassword']
+            cpassword=request.get_json()['confirmpassword']
+            cursor=mydb.cursor(buffered=True)
+            cursor.execute('select count(*) from userdata where useremail=%s',[user_email])
+            email_count=cursor.fetchone()[0]
+            if email_count==1:
+                cursor.execute('update userdata set password=%s where useremail=%s',[npassword,user_email])
+                mydb.commit()
+                cursor.close()
+                return jsonify({'status':'Success','message':'ok'}),200
+            else:
+                return jsonify({"status":"failed","message":"email not found"})
+        return render_template('newpassword.html',data=data)  
+    except Exception as e:
+        print(e) 
+        return jsonify({"status":"failed","message":f'{str(e)}'}),500
 if __name__=='__main__':
     app.run(debug=True,use_reloader=True)
