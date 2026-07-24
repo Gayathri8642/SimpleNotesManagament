@@ -1,0 +1,61 @@
+{% extends 'dashboard.html' %}
+    {% block title %} <title>Search</title> {% endblock %}
+
+    <!-- Bootstrap CSS -->
+    {% block addcss %}<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/viewallnotes.css') }}">{% endblock %}
+{% block content %}
+<div class="container mt-5">
+
+    <div class="notes-card">
+
+        <div class="notes-header">
+            <h2><i class="bi bi-journal-text"></i>Search data</h2>
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Notes ID</th>
+                        <th>Title</th>
+                        <th>Created At</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for note in searchresult %}
+                    <tr>
+                        <td>{{ note[0] }}</td>
+                        <td>{{ note[1] }}</td>
+                        <td>{{ note[2] }}</td>
+                       <td> <a href="{{url_for('viewnotes',notesid=note[0])}}">View</a></td>
+                        <td><a href="{{url_for('updatenotes',notesid=note[0])}}">Update</a></td>
+                        <td><a href="{{url_for('delete',notesid=note[0])}}">Delete</a></td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="3" class="text-center text-muted">
+                            No notes found.
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

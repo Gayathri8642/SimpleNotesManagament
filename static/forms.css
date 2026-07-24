@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+* {
+    font-family: "Roboto", sans-serif;
+}
+
+body {
+    background: #f2f2f2;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+#myForm {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    margin-left: 0;
+    padding: 20px 30px;
+    background-color: beige;
+    box-shadow: -2px -3px 14px black;
+    border-radius: 10px;
+}
+
+#myForm h1 {
+    text-align: center;
+}
+
+#myForm label {
+    color: blue;
+    margin-top: 7px;
+    margin-bottom: 2px;
+}
+
+#myForm input,
+#myForm select,
+#myForm textarea {
+    padding: 8px;
+    border: 0.6px solid grey;
+    border-radius: 5px;
+    outline: none;
+    margin-bottom: 10px;
+}
+
+
+#myForm button {
+    background-color: blue;
+    color: white;
+    border: none;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#myForm button:hover {
+    background-color: white;
+    color: blue;
+    border: 1px solid blue;
+    cursor: pointer;
+}

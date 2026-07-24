@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+      <center style="color: rgb(150,19,113);">{{ message }}</center>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login form</title>
+    <link rel="stylesheet" href="/static/forms.css"/>
+</head>
+<body>
+    <form id="myForm" method="post">
+        <h1>Login Here!</h1>
+        <label>Email</label>
+        <input type="email" name="useremail" placeholder="Enter your mailid" required/>
+
+        <label>Password</label>
+        <input type="password" name="userpassword" placeholder="Enter your password" required/>
+
+        <button type="submit">Login</button>
+        <p style="text-align:center; margin-top: 15px;">
+            Don't have an account? <a href="{{ url_for('register') }}">Register</a>
+        </p>
+    </form>
+</body>
+</html>

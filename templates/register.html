@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+      <center style="color: rgb(150,19,113);">{{ message }}</center>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup form</title>
+    <link rel="stylesheet" href="/static/forms.css"/>
+</head>
+
+<body>
+    <form id="myForm" action="/register" method="post">
+        <h1>REGISTER HERE</h1>
+        <label> Username</label>
+        <input type="text" name="username" placeholder="Enter username" required/>
+
+        <label>Email</label>
+        <input type="email" name="useremail" placeholder="Enter your emailid" required/>
+
+        <label>Password</label>
+        <input type="password" name="userpassword" placeholder="Enter password" required/>
+
+        <button type="submit">Register</button>
+    </form>
+    
+</body>
+</html>

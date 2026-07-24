@@ -1,0 +1,23 @@
+body{
+            background:#f5f7fa;
+        }
+
+        .navbar-brand{
+            font-weight:bold;
+            font-size:24px;
+        }
+
+        .dashboard-content{
+            margin-top:40px;
+        }
+
+        .card{
+            border:none;
+            border-radius:15px;
+            box-shadow:0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .card-body{
+            text-align:center;
+            padding:40px;
+        }

@@ -1,0 +1,27 @@
+.page-shell {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: linear-gradient(135deg, #f4f7fb 0%, #eaf2ff 100%);
+}
+
+.action-card {
+    width: min(100%, 460px);
+    padding: 32px;
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 14px 40px rgba(13, 43, 111, 0.12);
+}
+
+.action-card h1 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #0d2b6f;
+}
+
+.action-card p {
+    margin-bottom: 20px;
+    color: #6c757d;
+}
